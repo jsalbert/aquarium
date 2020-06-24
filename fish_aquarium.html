@@ -1,0 +1,118 @@
+<html>
+    <body>
+        <div style="position: relative;">
+         <canvas id="layer1" width=1100px height=600px style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+         <canvas id="layer2" width=1100px height=600px style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+         <canvas id="layer3" width=1100px height=600px style="position: absolute; left: 0; top: 0; z-index: 2;"></canvas>
+         <canvas id="layer4" width=1100px height=600px style="position: absolute; left: 0; top: 0; z-index: 3;"></canvas>
+         <canvas id="layer5" width=1100px height=600px style="position: absolute; left: 0; top: 0; z-index: 4;"></canvas>
+         <canvas id="layer6" width=1100px height=600px style="position: absolute; left: 0; top: 0; z-index: 5;"></canvas>
+        </div>
+
+        <script type="module">
+            import {FishOrange, FishYellow, FishBlue, Hammerhead, Shark, Fish1, Fish2, Fish3} from "./elements/fishes.js"
+            import {Coral1, Coral2, Coral3, Coral4, Coral5, Alga1, Alga2, Anemona} from "./elements/seabed.js"
+
+            const num_seabed_items = Math.random() * 30 + 30
+            const num_small_fish = Math.random() * 20 + 15
+            const num_big_fish = Math.random() * 5 + 2
+
+            const canvas = document.getElementById('layer1');
+            const context = canvas.getContext('2d');
+ 
+            const canvas2 = document.getElementById('layer2');
+            const context2 = canvas2.getContext('2d');
+
+            const canvas3 = document.getElementById('layer3');
+            const context3 = canvas3.getContext('2d');
+
+            const canvas4 = document.getElementById('layer4');
+            const context4 = canvas4.getContext('2d');
+
+            const canvas5 = document.getElementById('layer5');
+            const context5 = canvas5.getContext('2d');
+
+            const canvas6 = document.getElementById('layer6');
+            const context6 = canvas6.getContext('2d');
+
+            const small_fishes = {
+                "orangefish": FishOrange, 
+                "bluefish": FishBlue,
+                "yellowfish": FishYellow,
+                "fish1": Fish1,
+                "fish2": Fish2,
+                "fish3": Fish3
+            };
+
+            const big_fishes = {
+                "hammerhead": Hammerhead,
+                "shark": Shark
+            };
+
+            const seabed_species =  {
+                "anemona":Anemona, "coral1":Coral1, "coral2":Coral2, "coral3":Coral3, "coral4":Coral4, "coral5":Coral5, "alga1":Alga1, "alga2":Alga2
+            };
+
+            const ctx_fishes = new Array(context2, context4, context6)
+            const ctx_seabed = new Array(context3, context5)
+
+            function randomChoice(arr){
+                return arr[Math.floor(Math.random() * arr.length)];
+            }
+
+            function make_base(){
+                let base_image = new Image();
+                base_image.src = 'img/aquarium.jpg';
+                base_image.onload = function(){
+                    context.drawImage(base_image, 0, 0, 1100, 600);
+                }
+            }
+
+            make_base()
+         
+            function canvasDraw(){
+                ctx_fishes.forEach(function(obj){
+                    obj.clearRect(0, 0, canvas.width, canvas.height);
+                })
+
+                seabed.forEach(function(obj){
+                    obj.draw();
+                });
+
+                fishes.forEach(function(obj){
+                    obj.draw();
+                    obj.move();
+                });
+
+                window.requestAnimationFrame(canvasDraw);
+            }
+
+            function randomSpecies(species_dict, size, context_arr){
+                let specie = randomChoice(Object.values(species_dict))
+                let context = randomChoice(context_arr)
+                return new specie(size, canvas, context)
+            }
+
+            let seabed = new Array();
+            let fishes = new Array();
+
+            for (let i = 0; i<num_seabed_items; i++){
+                let newSeaBed = new randomSpecies(seabed_species, 25, ctx_seabed);
+                seabed.push(newSeaBed);
+            }
+
+            for (let i = 0; i<num_small_fish; i++){
+                let newFish = new randomSpecies(small_fishes, 25, ctx_fishes);
+                fishes.push(newFish);
+            }
+
+            for (let i = 0; i<num_big_fish; i++){
+                let newFish = new randomSpecies(big_fishes, 40, ctx_fishes);
+                fishes.push(newFish);
+            }
+
+            window.requestAnimationFrame(canvasDraw);
+
+        </script>
+    </body>
+</html>
