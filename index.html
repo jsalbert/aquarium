@@ -10,13 +10,17 @@
         </div>
 
         <script type="module">
-            import {FishOrange, FishYellow, FishBlue, Hammerhead, Shark, Fish1, Fish2, Fish3} from "./elements/fishes.js"
+            import {FishOrange, FishYellow, FishBlue, Hammerhead, Shark, Fish1, Fish2, Fish3, Nemo, Manta, Turtle} from "./elements/fishes.js"
             import {Coral1, Coral2, Coral3, Coral4, Coral5, Alga1, Alga2, Anemona} from "./elements/seabed.js"
 
-            const num_seabed_items = Math.random() * 30 + 30
-            const num_small_fish = Math.random() * 20 + 15
-            const num_big_fish = Math.random() * 5 + 2
+            const num_seabed_items = Math.random() * 30 + 40
+            const num_small_fish = Math.random() * 20 + 30
+            const num_big_fish = Math.random() * 5 + 4
 
+            function setCanvasFullSize(canvas){
+                canvas.width  = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
             const canvas = document.getElementById('layer1');
             const context = canvas.getContext('2d');
  
@@ -35,18 +39,27 @@
             const canvas6 = document.getElementById('layer6');
             const context6 = canvas6.getContext('2d');
 
+            let canvases = new Array(canvas, canvas2, canvas3, canvas4, canvas5, canvas6)
+
+            canvases.forEach(function(obj){
+                    setCanvasFullSize(obj);
+                });
+
             const small_fishes = {
                 "orangefish": FishOrange, 
                 "bluefish": FishBlue,
                 "yellowfish": FishYellow,
                 "fish1": Fish1,
                 "fish2": Fish2,
-                "fish3": Fish3
+                "fish3": Fish3,
+                "nemo": Nemo
             };
 
             const big_fishes = {
                 "hammerhead": Hammerhead,
-                "shark": Shark
+                "shark": Shark,
+                "manta": Manta,
+                "turtle": Turtle
             };
 
             const seabed_species =  {
@@ -64,7 +77,7 @@
                 let base_image = new Image();
                 base_image.src = 'img/aquarium.jpg';
                 base_image.onload = function(){
-                    context.drawImage(base_image, 0, 0, 1100, 600);
+                    context.drawImage(base_image, 0, 0, canvas.width, canvas.height);
                 }
             }
 
