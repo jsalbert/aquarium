@@ -171,8 +171,8 @@ class Manta extends Fish{
 class Turtle extends Fish{
     constructor(size, canvas, context){
         super(size, canvas, context);
-        this.size_1 = (Math.random()+3.0) * size;
-        this.size_2 = (Math.random()+2.2) * size;
+        this.size_1 = (Math.random()+5.0) * size;
+        this.size_2 = (Math.random()+4.0) * size;
         this.xChange = (Math.random() + 0.2) * 0.5;
         this.yChange = Math.random() * 0.7 - 0.4;
         this.imgFish = new Image();  
@@ -188,14 +188,14 @@ const small_fishes = {
                 "fish1": Fish1,
                 "fish2": Fish2,
                 "fish3": Fish3,
-                "nemo": Nemo
+                "nemo": Nemo,
+                "turtle": Turtle
 };
 
 const big_fishes = {
     "hammerhead": Hammerhead,
     "shark": Shark,
     "manta": Manta,
-    "turtle": Turtle
 };
 
 export{small_fishes, big_fishes}
