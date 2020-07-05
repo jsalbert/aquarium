@@ -10,13 +10,19 @@
         </div>
 
         <script type="module">
-            import {FishOrange, FishYellow, FishBlue, Hammerhead, Shark, Fish1, Fish2, Fish3, Nemo, Manta, Turtle} from "./elements/fishes.js"
-            import {Coral1, Coral2, Coral3, Coral4, Coral5, Alga1, Alga2, Anemona} from "./elements/seabed.js"
+            import {small_fishes, big_fishes} from "./elements/fishes.js"
+            import {seabed_species} from "./elements/seabed.js"
+            import {ScubaMan, ScubaWoman} from "./elements/humans.js"
 
+            // Disable scrolling
+            document.getElementsByTagName('body')[0].style.overflow = 'hidden';
+
+            // Random number of items
             const num_seabed_items = Math.random() * 30 + 40
             const num_small_fish = Math.random() * 20 + 30
             const num_big_fish = Math.random() * 5 + 4
 
+            // Set multilayer canvas
             function setCanvasFullSize(canvas){
                 canvas.width  = window.innerWidth;
                 canvas.height = window.innerHeight;
@@ -45,32 +51,18 @@
                     setCanvasFullSize(obj);
                 });
 
-            const small_fishes = {
-                "orangefish": FishOrange, 
-                "bluefish": FishBlue,
-                "yellowfish": FishYellow,
-                "fish1": Fish1,
-                "fish2": Fish2,
-                "fish3": Fish3,
-                "nemo": Nemo
-            };
-
-            const big_fishes = {
-                "hammerhead": Hammerhead,
-                "shark": Shark,
-                "manta": Manta,
-                "turtle": Turtle
-            };
-
-            const seabed_species =  {
-                "anemona":Anemona, "coral1":Coral1, "coral2":Coral2, "coral3":Coral3, "coral4":Coral4, "coral5":Coral5, "alga1":Alga1, "alga2":Alga2
-            };
-
             const ctx_fishes = new Array(context2, context4, context6)
             const ctx_seabed = new Array(context3, context5)
 
+            // Helper functions
             function randomChoice(arr){
                 return arr[Math.floor(Math.random() * arr.length)];
+            }
+
+            function randomSpecies(species_dict, size, context_arr){
+                let specie = randomChoice(Object.values(species_dict))
+                let context = randomChoice(context_arr)
+                return new specie(size, canvas, context)
             }
 
             function make_base(){
@@ -82,14 +74,23 @@
             }
 
             make_base()
-         
+
+            let seabed = new Array();
+            let fishes = new Array();
+
+            // Draw fishes and animate them
             function canvasDraw(){
                 ctx_fishes.forEach(function(obj){
                     obj.clearRect(0, 0, canvas.width, canvas.height);
-                })
+                });
 
                 seabed.forEach(function(obj){
                     obj.draw();
+                });
+
+                scubadivers.forEach(function(obj){
+                	obj.draw();
+                    obj.move();
                 });
 
                 fishes.forEach(function(obj){
@@ -99,15 +100,6 @@
 
                 window.requestAnimationFrame(canvasDraw);
             }
-
-            function randomSpecies(species_dict, size, context_arr){
-                let specie = randomChoice(Object.values(species_dict))
-                let context = randomChoice(context_arr)
-                return new specie(size, canvas, context)
-            }
-
-            let seabed = new Array();
-            let fishes = new Array();
 
             for (let i = 0; i<num_seabed_items; i++){
                 let newSeaBed = new randomSpecies(seabed_species, 25, ctx_seabed);
@@ -124,6 +116,9 @@
                 fishes.push(newFish);
             }
 
+            let scubadivers = new Array();
+            scubadivers.push(new ScubaMan(70, canvas6, context6));
+            scubadivers.push(new ScubaWoman(60, canvas6, context6));
             window.requestAnimationFrame(canvasDraw);
 
         </script>
