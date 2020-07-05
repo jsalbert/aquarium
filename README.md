@@ -33,6 +33,8 @@ window.requestAnimationFrame(canvasDraw);
 
 ## Resources
 
-https://jsprogramming.net/javascript-programming-basics-tutorial
+- https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server
 
-https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations
+- https://jsprogramming.net/javascript-programming-basics-tutorial
+
+- https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations
