@@ -91,4 +91,15 @@ class Anemona extends SeaBed{
     }
 }
 
-export {Coral1, Coral2, Coral3, Coral4, Coral5, Alga1, Alga2, Anemona}
+const seabed_species =  {
+                "anemona":Anemona, 
+                "coral1":Coral1, 
+                "coral2":Coral2, 
+                "coral3":Coral3, 
+                "coral4":Coral4, 
+                "coral5":Coral5, 
+                "alga1":Alga1, 
+                "alga2":Alga2
+};
+
+export {seabed_species}
